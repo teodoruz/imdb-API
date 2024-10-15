@@ -1,0 +1,26 @@
+package com.movies.imdb_API.Models;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Entity
+@AllArgsConstructor
+public class UserMovie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userMovieId;
+
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "movieId")
+    private Movie movie;
+
+    public UserMovie() {
+
+    }
+}
