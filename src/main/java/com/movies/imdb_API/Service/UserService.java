@@ -1,5 +1,6 @@
 package com.movies.imdb_API.Service;
 
+import com.movies.imdb_API.Exceptions.EntityNotFaundException;
 import com.movies.imdb_API.Exceptions.UsernameAlreadyExists;
 import com.movies.imdb_API.Models.DTOs.UserDTO;
 import com.movies.imdb_API.Models.User;
@@ -7,7 +8,9 @@ import com.movies.imdb_API.Repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -28,6 +31,11 @@ public class UserService {
             }
             userRepository.save(user);
             return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    public ResponseEntity<User> getUserById(Long id){
+        User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFaundException("e"));
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     public void toDTO(UserDTO userDTO, User user){

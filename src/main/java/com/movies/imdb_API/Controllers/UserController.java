@@ -5,10 +5,7 @@ import com.movies.imdb_API.Models.User;
 import com.movies.imdb_API.Service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/user")
@@ -23,5 +20,9 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> postUser(@RequestBody UserDTO userDTO){
         return userService.postUser(userDTO);
+    }
+    @GetMapping("/{idUser}")
+    public ResponseEntity<User> getUserById(@PathVariable long idUser){
+        return userService.getUserById(idUser);
     }
 }
