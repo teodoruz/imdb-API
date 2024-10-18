@@ -1,4 +1,4 @@
-package com.movies.imdb_API.Exceptions;
+package com.movies.imdb_API.Exceptions.userExceptions;
 
 
 public class UsernameAlreadyExists extends RuntimeException{
