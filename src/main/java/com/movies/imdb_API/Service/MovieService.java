@@ -1,5 +1,6 @@
 package com.movies.imdb_API.Service;
 
+import com.movies.imdb_API.Exceptions.EntityNotFaundException;
 import com.movies.imdb_API.Exceptions.movieExceptions.MovieListIsEmpty;
 import com.movies.imdb_API.Exceptions.movieExceptions.MovieTitleNotNull;
 import com.movies.imdb_API.Models.DTOs.MovieDTO;
@@ -8,6 +9,7 @@ import com.movies.imdb_API.Repository.MovieRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -38,6 +40,10 @@ public class MovieService {
                 throw new MovieListIsEmpty("List null");
             }
         return ResponseEntity.status(HttpStatus.OK).body(movieList);
+    }
+    public ResponseEntity<Movie> findById(@PathVariable Long idmovie){
+        Movie movie = movieRepository.findById(idmovie).orElseThrow(() -> new EntityNotFaundException("error"));
+        return ResponseEntity.status(HttpStatus.OK).body(movie);
     }
 
     public void toDTO(MovieDTO movieDTO, Movie movie){
