@@ -1,5 +1,6 @@
 package com.movies.imdb_API.Controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.movies.imdb_API.Models.DTOs.MovieDTO;
 import com.movies.imdb_API.Models.DTOs.UserDTO;
 import com.movies.imdb_API.Models.Movie;
@@ -9,6 +10,7 @@ import com.movies.imdb_API.Service.MovieService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -32,5 +34,9 @@ public class MovieController {
     @GetMapping("/{idmovie}")
     public ResponseEntity<Movie> findMovieById(@PathVariable long idmovie){
         return movieService.findById(idmovie);
+    }
+@GetMapping("/popularmovies")
+    public ResponseEntity<JsonNode> getPopularMovies() throws IOException, InterruptedException {
+        return movieService.getPopularMovies();
     }
 }

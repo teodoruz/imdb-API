@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -33,6 +36,14 @@ public class UserService {
     public ResponseEntity<User> getUserById(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> new EntityNotFaundException("e"));
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<User>> findAll(){
+        List<User> userDTOList = userRepository.findAll();
+        if(userDTOList.isEmpty()){
+            throw new EntityNotFaundException("List empty");
+        }
+        return  ResponseEntity.status(HttpStatus.OK).body(userDTOList);
     }
 
     public void toDTO(UserDTO userDTO, User user){
